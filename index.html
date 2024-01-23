@@ -8,12 +8,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
+    <div class="splash-screen start-screen">
+        <button type="button" class="startBtn">START GAME</button>
+    </div>
+    
+
     <div class="container">
-        <button type="button">START GAME</button>
-        
-        <img src="https://drive.google.com/uc?export=download&id=1vjJFia7wgNJOCftIbCcaiGen4h1Pnv9Q" alt="Crosshair" class="cursor" />
-        <img src="https://drive.google.com/uc?export=download&id=1QN-ZWsH7emFw7QFOaXFxE7CohxOB2Ht4" alt="Blood Spot" class="bloodSpot" />
+        <div class="score-display">Score: 0</div>
+        <img src="./images/crosshair.png" alt="Crosshair" class="cursor" />
+        <img src="./images/blood-spot.png" alt="Blood Spot" class="bloodSpot" />
+    </div>
+    <div class="game-over-screen">
+        <div class="final-score-display"></div>
+        <button type="button" class="restartBtn">RESTART</button>
+    </div>
+
+    <audio id="startMusic" src="./music/start-music.mp3" loop></audio>
+    <audio id="gameMusic" src="./music/game-music.mp3" loop></audio>
+    <audio id="splashSound" src="./music/splash-sound.mp3"></audio>
     <script src="script.js"></script>
-</div> 
 </body>
 </html>

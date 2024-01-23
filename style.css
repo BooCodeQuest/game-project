@@ -3,23 +3,26 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-    cursor: none;
+    /*
+    cursor: none; */
   }
   
   body {
-    background-image: url("https://drive.google.com/uc?export=download&id=1M42mkJo_ILpyt1penWJLFAGwyycD9oKq");
+    background-image: url("./images/wall.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
     text-align: center;
+    cursor: url('./images/crosshair.png'), auto; 
   }
   
   .container {
     position: relative;
     height: 100%;
     overflow: hidden;
+    cursor: none;
   }
-  
+
   button {
     color: #fff;
     border: 2px solid #fff;
@@ -28,7 +31,8 @@
     font-size: 1.1rem;
     margin-top: 3em;
     outline: none;
-    cursor: none;
+    /*
+    cursor: none;*/
   }
   
   .bloodSpot {
@@ -55,4 +59,62 @@
     transition: 0.3s transform ease;
     transform-origin: 100% 100%;
   }
+ 
+
   
+  .splash-screen, .game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+
+.container, .game-over-screen {
+    display: none;
+}
+
+/* ... existing styles ... */
+
+.cursor {
+    position: absolute;
+    height: 70px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 2;
+    transition: 0.3s transform ease;
+    transform-origin: 100% 100%;
+    display: block; /* Make sure the cursor is visible */
+}
+
+.score-display, .final-score-display {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    z-index: 3;
+}
+
+.container .score-display {
+    display: none; /* Initially hidden, shown during game */
+}
+
+.game-over-screen .final-score-display {
+    display: none; /* Initially hidden, shown during game over */
+}
+
+/* ... other existing styles ... */
+.start-screen {
+  background-image: url('./images/start-background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
