@@ -1,42 +1,110 @@
-const container = document.querySelector(".container");
-const bloodSpot = document.querySelector(".bloodSpot");
-const startBtn = document.querySelector(".startBtn");
+class Game {
+    constructor() {
+        this.state = "splash"; // splash, game, gameover
+        this.score = 0;
+        this.terrorist = document.createElement("img");
+        this.terrorist.setAttribute("class", "terrorist");
+        this.terrorist.setAttribute("src", "./images/terrorist.png");
+        this.bloodSpot = document.querySelector(".bloodSpot");
+        this.startBtn = document.querySelector(".startBtn");
+        this.container = document.querySelector(".container");
+        this.cursor = document.querySelector(".cursor");
+        this.gameOverScreen = document.querySelector(".game-over-screen");
+        this.gameTimer = null;
+        this.initEventListeners();
+        this.startMusic = document.getElementById("startMusic");
+        this.gameMusic = document.getElementById("gameMusic");
+        this.splashSound = document.getElementById("splashSound");
+    }
 
-const terrorist = document.createElement("img");
-terrorist.setAttribute("class", "terrorist");
-terrorist.setAttribute("src", "https://drive.google.com/uc?export=download&id=1ELfqW80-s1O9MjvtkpcNCdmXLoHYGKms");
+    initEventListeners() {
+        this.startBtn.addEventListener("click", () => this.startGame());
+        this.gameOverScreen.querySelector(".restartBtn").addEventListener("click", () => this.restartGame());
+        window.addEventListener("click", (e) => this.handleWindowClick(e));
+        window.addEventListener("mousemove", (e) => this.handleMouseMove(e));
+    }
 
-const contHeight = container.offsetHeight;
-const contWidth = container.offsetWidth;
+    startGame() {
+        if (this.state !== "splash") return;
 
-setInterval(() => {
-  const randTop = Math.random() * (contHeight - 100);
-  const randLeft = Math.random() * (contWidth - 100);
+        this.state = "game";
+        this.score = 0;
+        this.updateScoreDisplay();
+        document.querySelector(".splash-screen").style.display = "none";
+        this.container.style.display = "block";
+        this.container.appendChild(this.terrorist);
+        this.container.querySelector('.score-display').style.display = 'block'; // Show score display
+        this.moveTerrorist();
+        this.startTimer();
+        this.container.style.cursor = "none"; // Hide the default cursor
+        this.startMusic.pause();
+        this.gameMusic.play();
+    }
 
-  terrorist.style.position = "absolute";
-  terrorist.style.top = randTop + "px";
-  terrorist.style.left = randLeft + "px";
-}, 1000);
+    gameOver() {
+        this.state = "gameover";
+        this.container.style.display = "none";
+        this.gameOverScreen.style.display = "flex";
+        clearInterval(this.gameTimer);
+        document.querySelector('.final-score-display').innerText = "Final Score: " + this.score;
+        document.querySelector('.final-score-display').style.display = 'block'; // Show final score
+        this.container.style.cursor = "auto"; // Show the default cursor
+    }
 
-let score = 0;
+    restartGame() {
+        if (this.state !== "gameover") return;
+        this.state = "splash";
+        this.score = 0;
+        this.updateScoreDisplay();
+        this.gameOverScreen.style.display = "none";
+        document.querySelector(".splash-screen").style.display = "flex";
+        this.gameMusic.pause();
+        this.startMusic.play();
+    }
 
-startBtn.addEventListener("click", () => {
-  container.appendChild(terrorist);
+    updateScoreDisplay() {
+        this.container.querySelector('.score-display').innerText = "Score: " + this.score;
+    }
 
-  startBtn.innerText = "SCORE: " + score;
-});
+    handleWindowClick(e) {
+        if (this.state !== "game") return;
 
-window.addEventListener("click", (e) => {
-  bloodSpot.style.top = e.pageY + "px";
-  bloodSpot.style.left = e.pageX + "px";
+        this.bloodSpot.style.top = e.pageY + "px";
+        this.bloodSpot.style.left = e.pageX + "px";
 
-  if (e.target === terrorist) score++;
+        if (e.target === this.terrorist) {
+            this.score++;
+            this.updateScoreDisplay();
+            this.splashSound.currentTime = 0; // Reset the sound
+            this.splashSound.play(); // Play the splash sound
+        }
+    }
 
-  startBtn.innerText = "SCORE: " + score;
-});
+    handleMouseMove(e) {
+        this.cursor.style.top = e.pageY + "px";
+        this.cursor.style.left = e.pageX + "px";
+    }
 
-const cursor = document.querySelector(".cursor");
-window.addEventListener("mousemove", (e) => {
-  cursor.style.top = e.pageY + "px";
-  cursor.style.left = e.pageX + "px";
-});
+    moveTerrorist() {
+        setInterval(() => {
+            if (this.state !== "game") return;
+
+            const contHeight = this.container.offsetHeight;
+            const contWidth = this.container.offsetWidth;
+            const randTop = Math.random() * (contHeight - 100);
+            const randLeft = Math.random() * (contWidth - 100);
+
+            this.terrorist.style.position = "absolute";
+            this.terrorist.style.top = randTop + "px";
+            this.terrorist.style.left = randLeft + "px";
+        }, 1000);
+    }
+
+    startTimer() {
+        this.gameTimer = setTimeout(() => {
+            this.gameOver();
+        }, 25000); // 25 seconds
+    }
+}
+
+const game = new Game();
