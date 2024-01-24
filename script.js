@@ -1,23 +1,29 @@
 class Game {
     constructor() {
-        this.state = "splash"; // splash, game, gameover
+        this.state = "splash"; // Possible states: splash, game, gameover
         this.score = 0;
-        this.terrorist = document.createElement("img");
-        this.terrorist.setAttribute("class", "terrorist");
-        this.terrorist.setAttribute("src", "./images/terrorist.png");
+        this.fly = document.createElement("img");
+        this.fly.setAttribute("class", "fly");
+        this.fly.setAttribute("src", "./images/fly.png");
         this.bloodSpot = document.querySelector(".bloodSpot");
         this.startBtn = document.querySelector(".startBtn");
         this.container = document.querySelector(".container");
         this.cursor = document.querySelector(".cursor");
         this.gameOverScreen = document.querySelector(".game-over-screen");
         this.gameTimer = null;
-        this.initEventListeners();
         this.startMusic = document.getElementById("startMusic");
         this.gameMusic = document.getElementById("gameMusic");
         this.splashSound = document.getElementById("splashSound");
+
+        this.initEventListeners();
     }
 
     initEventListeners() {
+        // Play start music when clicking on the background
+        document.body.addEventListener("click", () => {
+            this.startMusic.play().catch(e => console.error("Start music play failed:", e));
+        }, { once: true });
+
         this.startBtn.addEventListener("click", () => this.startGame());
         this.gameOverScreen.querySelector(".restartBtn").addEventListener("click", () => this.restartGame());
         window.addEventListener("click", (e) => this.handleWindowClick(e));
@@ -27,18 +33,20 @@ class Game {
     startGame() {
         if (this.state !== "splash") return;
 
+        // Stop the start music and start the game music
+        this.startMusic.pause();
+        this.gameMusic.play().catch(e => console.error("Game music play failed:", e));
+
         this.state = "game";
         this.score = 0;
         this.updateScoreDisplay();
         document.querySelector(".splash-screen").style.display = "none";
         this.container.style.display = "block";
-        this.container.appendChild(this.terrorist);
-        this.container.querySelector('.score-display').style.display = 'block'; // Show score display
-        this.moveTerrorist();
+        this.container.appendChild(this.fly);
+        this.container.querySelector('.score-display').style.display = 'block';
+        this.movefly();
         this.startTimer();
-        this.container.style.cursor = "none"; // Hide the default cursor
-        this.startMusic.pause();
-        this.gameMusic.play();
+        this.container.style.cursor = "none";
     }
 
     gameOver() {
@@ -47,8 +55,9 @@ class Game {
         this.gameOverScreen.style.display = "flex";
         clearInterval(this.gameTimer);
         document.querySelector('.final-score-display').innerText = "Final Score: " + this.score;
-        document.querySelector('.final-score-display').style.display = 'block'; // Show final score
-        this.container.style.cursor = "auto"; // Show the default cursor
+        document.querySelector('.final-score-display').style.display = 'block';
+        this.container.style.cursor = "auto";
+        this.gameMusic.pause();
     }
 
     restartGame() {
@@ -59,7 +68,6 @@ class Game {
         this.gameOverScreen.style.display = "none";
         document.querySelector(".splash-screen").style.display = "flex";
         this.gameMusic.pause();
-        this.startMusic.play();
     }
 
     updateScoreDisplay() {
@@ -72,11 +80,11 @@ class Game {
         this.bloodSpot.style.top = e.pageY + "px";
         this.bloodSpot.style.left = e.pageX + "px";
 
-        if (e.target === this.terrorist) {
+        if (e.target === this.fly) {
             this.score++;
             this.updateScoreDisplay();
-            this.splashSound.currentTime = 0; // Reset the sound
-            this.splashSound.play(); // Play the splash sound
+            this.splashSound.currentTime = 0;
+            this.splashSound.play();
         }
     }
 
@@ -85,7 +93,7 @@ class Game {
         this.cursor.style.left = e.pageX + "px";
     }
 
-    moveTerrorist() {
+    movefly() {
         setInterval(() => {
             if (this.state !== "game") return;
 
@@ -94,9 +102,9 @@ class Game {
             const randTop = Math.random() * (contHeight - 100);
             const randLeft = Math.random() * (contWidth - 100);
 
-            this.terrorist.style.position = "absolute";
-            this.terrorist.style.top = randTop + "px";
-            this.terrorist.style.left = randLeft + "px";
+            this.fly.style.position = "absolute";
+            this.fly.style.top = randTop + "px";
+            this.fly.style.left = randLeft + "px";
         }, 1000);
     }
 

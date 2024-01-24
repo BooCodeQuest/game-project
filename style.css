@@ -24,16 +24,42 @@
   }
 
   button {
-    color: #fff;
-    border: 2px solid #fff;
-    background: transparent;
     padding: 15px 45px;
     font-size: 1.1rem;
-    margin-top: 3em;
+    margin-bottom: 4em;
     outline: none;
     /*
     cursor: none;*/
+    background-color: #ff4081; /* Candy pink */
+    border-radius: 20px; /* Round corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    color: white;
+    font-weight: bold;
+    border: none;
+    text-shadow: 1px 1px 2px black;
+    transition: transform 0.1s ease, box-shadow 0.1s ease; 
   }
+
+
+  button.startBtn {
+    background-color: #ff4081; /* Candy pink */
+    border-radius: 20px; /* Round corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    color: white;
+    font-weight: bold;
+    border: none;
+    text-shadow: 1px 1px 2px black;
+    transition: transform 0.1s ease, box-shadow 0.1s ease; /* Smooth transition for click */
+}
+
+button.startBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+button.startBtn:active {
+    transform: scale(0.95);
+}
   
   .bloodSpot {
     position: absolute;
@@ -42,7 +68,7 @@
     z-index: 2;
   }
   
-  .terrorist {
+  .fly {
     height: 100px;
   }
   
@@ -117,4 +143,5 @@
   background-image: url('./images/start-background.png');
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center; /* Center the start background image */
 }
