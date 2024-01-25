@@ -1,147 +1,110 @@
+/* Global Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-    /*
-    cursor: none; */
-  }
-  
-  body {
-    background-image: url("./images/wall.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    text-align: center;
-    cursor: url('./images/crosshair.png'), auto; 
-  }
-  
-  .container {
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-    cursor: none;
-  }
-
-  button {
-    padding: 15px 45px;
-    font-size: 1.1rem;
-    margin-bottom: 4em;
-    outline: none;
-    /*
-    cursor: none;*/
-    background-color: #ff4081; /* Candy pink */
-    border-radius: 20px; /* Round corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    color: white;
-    font-weight: bold;
-    border: none;
-    text-shadow: 1px 1px 2px black;
-    transition: transform 0.1s ease, box-shadow 0.1s ease; 
-  }
-
-
-  button.startBtn {
-    background-color: #ff4081; /* Candy pink */
-    border-radius: 20px; /* Round corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    color: white;
-    font-weight: bold;
-    border: none;
-    text-shadow: 1px 1px 2px black;
-    transition: transform 0.1s ease, box-shadow 0.1s ease; /* Smooth transition for click */
+  /* Resetting default margin and padding for all elements */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+  font-family: "Poppins", sans-serif; 
 }
 
+/* Body Style */
+body {
+  background-image: url("./assets/images/wall.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh; 
+  text-align: center;
+  cursor: url('./assets/images/crosshair.png'), auto; 
+}
+
+/* Main Game Container Style */
+.container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  cursor: none; 
+}
+
+/* General Button Styling */
+button {
+  padding: 15px 45px;
+  font-size: 1.1rem;
+  margin-bottom: 4em;
+  outline: none;
+  background-color: #ff4081; 
+  border-radius: 20px; 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
+  color: white;
+  font-weight: bold;
+  border: none;
+  text-shadow: 1px 1px 2px black; 
+  transition: transform 0.1s ease, box-shadow 0.1s ease; 
+}
+
+/* Start Button Interaction States */
 button.startBtn:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+  transform: scale(1.05);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
 }
 
 button.startBtn:active {
-    transform: scale(0.95);
-}
-  
-  .bloodSpot {
-    position: absolute;
-    height: 50px;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-  }
-  
-  .fly {
-    height: 100px;
-  }
-  
-  img::selection {
-    background: transparent;
-  }
-  
-  .cursor {
-    position: absolute;
-    height: 70px;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 2;
-    transition: 0.3s transform ease;
-    transform-origin: 100% 100%;
-  }
- 
-
-  
-  .splash-screen, .game-over-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
+  transform: scale(0.95);
 }
 
-
-.container, .game-over-screen {
-    display: none;
+/* Game Elements Styling */
+.bloodSpot {
+  position: absolute;
+  height: 50px;
+  transform: translate(-50%, -50%); 
+  z-index: 2; 
 }
 
-/* ... existing styles ... */
+.fly {
+  height: 100px;
+}
+
+img::selection {
+  background: transparent;
+}
 
 .cursor {
-    position: absolute;
-    height: 70px;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 2;
-    transition: 0.3s transform ease;
-    transform-origin: 100% 100%;
-    display: block; /* Make sure the cursor is visible */
+  /* Custom cursor styling for in-game interaction */
+  position: absolute;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
+  z-index: 2; 
+  transition: 0.3s transform ease; 
+}
+
+/* Game Screens Styling */
+.splash-screen, .game-over-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8); 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-direction: column;
+}
+
+/* Visibility Control */
+.container, .game-over-screen {
+  display: none;
 }
 
 .score-display, .final-score-display {
-    color: #fff;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-    z-index: 3;
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3; 
 }
 
-.container .score-display {
-    display: none; /* Initially hidden, shown during game */
-}
-
-.game-over-screen .final-score-display {
-    display: none; /* Initially hidden, shown during game over */
-}
-
-/* ... other existing styles ... */
 .start-screen {
-  background-image: url('./images/start-background.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center; /* Center the start background image */
+  background-image: url('./assets/images/start-background.png');
+  background-position: center;
 }
