@@ -1,10 +1,11 @@
 class Game {
     constructor() {
-        this.state = "splash"; // Possible states: splash, game, gameover
+        // Initializing game properties, UI elements, and sounds
+        this.state = "splash"; // Game states: splash, game, gameover
         this.score = 0;
         this.fly = document.createElement("img");
         this.fly.setAttribute("class", "fly");
-        this.fly.setAttribute("src", "./images/fly.png");
+        this.fly.setAttribute("src", "./assets/images/fly.png");
         this.bloodSpot = document.querySelector(".bloodSpot");
         this.startBtn = document.querySelector(".startBtn");
         this.container = document.querySelector(".container");
@@ -15,11 +16,12 @@ class Game {
         this.gameMusic = document.getElementById("gameMusic");
         this.splashSound = document.getElementById("splashSound");
 
+        // Setting up event listeners for game interactions
         this.initEventListeners();
     }
 
     initEventListeners() {
-        // Play start music when clicking on the background
+        // Event listeners for starting the game and handling mouse interactions
         document.body.addEventListener("click", () => {
             this.startMusic.play().catch(e => console.error("Start music play failed:", e));
         }, { once: true });
@@ -31,12 +33,11 @@ class Game {
     }
 
     startGame() {
+        // Starts the game: sets up the game environment, music, and UI elements
         if (this.state !== "splash") return;
 
-        // Stop the start music and start the game music
         this.startMusic.pause();
         this.gameMusic.play().catch(e => console.error("Game music play failed:", e));
-
         this.state = "game";
         this.score = 0;
         this.updateScoreDisplay();
@@ -50,6 +51,7 @@ class Game {
     }
 
     gameOver() {
+        // Handles the game over state: stops the game and shows the final score
         this.state = "gameover";
         this.container.style.display = "none";
         this.gameOverScreen.style.display = "flex";
@@ -61,6 +63,7 @@ class Game {
     }
 
     restartGame() {
+        // Resets the game to its initial state
         if (this.state !== "gameover") return;
         this.state = "splash";
         this.score = 0;
@@ -71,10 +74,12 @@ class Game {
     }
 
     updateScoreDisplay() {
+        // Updates the score display during the game
         this.container.querySelector('.score-display').innerText = "Score: " + this.score;
     }
 
     handleWindowClick(e) {
+        // Manages the scoring and interactions during the game
         if (this.state !== "game") return;
 
         this.bloodSpot.style.top = e.pageY + "px";
@@ -89,11 +94,13 @@ class Game {
     }
 
     handleMouseMove(e) {
+        // Moves the custom cursor according to the mouse movement
         this.cursor.style.top = e.pageY + "px";
         this.cursor.style.left = e.pageX + "px";
     }
 
     movefly() {
+        // Randomly moves the fly around the game container
         setInterval(() => {
             if (this.state !== "game") return;
 
@@ -109,10 +116,11 @@ class Game {
     }
 
     startTimer() {
+        // Starts a timer for the game duration
         this.gameTimer = setTimeout(() => {
             this.gameOver();
-        }, 25000); // 25 seconds
+        }, 25000);
     }
 }
 
-const game = new Game();
+const game = new Game(); // Instantiation of the Game class
